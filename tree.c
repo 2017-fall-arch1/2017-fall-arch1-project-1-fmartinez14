@@ -33,17 +33,24 @@ tree *addElement(tree *leTree, tree_node *source, tree_node *toAddElement){
     printf("Added to source \n");
   }
   else{
-    if(source -> children1 == NULL){
-      source -> children1 = toAddElement;
-      printf("Added to children 1 \n");
-      
+    if(strcmp(source->name,toAddElement->name) == 1){
+      printf("val: ",strcmp(source->name,toAddElement->name));
+      if(source -> children1 == NULL){
+	source -> children1 = toAddElement;
+	printf("Added to children 1 \n");
+      }
+      else{
+	leTree = addElement(leTree,source-> children1, toAddElement);
+      }
     }
-   else if(source -> children2 == NULL){
-     source -> children2=  toAddElement;
-     printf("Added to children 2 \n");
-    }
-   else{
-     leTree = addElement(leTree,source->children1,toAddElement);
+    else{
+      if(source -> children2 == NULL){
+       source -> children2=  toAddElement;
+       printf("Added to children 2 \n");
+      }
+      else{
+       leTree = addElement(leTree,source->children2,toAddElement);
+     }
    }
   }
   return leTree;
