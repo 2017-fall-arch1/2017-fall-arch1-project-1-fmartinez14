@@ -1,7 +1,12 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
+#include "tree.h"
+
+
+tree *myTree;
 
 main(){
   treeAction();
@@ -9,10 +14,13 @@ main(){
 }
 
 
-treeAction(){
+void treeAction(){
   int selection=0;
   char fname[256];
+  char employeename;
   int loopCheck = 1;
+  myTree = treeAlloc();
+  myTree-> name = ("%s","CheeseBalls");
   while(loopCheck == 1){
   printf("Hello! Please select an option below.\n");
   printf("1- Add a new employee.\n");
@@ -24,6 +32,8 @@ treeAction(){
   printf("Make your selection: ");
   scanf("%d",&selection);
   if(selection == 1){
+    scanf("%s",&employeename);
+    myTree =  treeAdder(myTree,&employeename);
     printf("Employee added!\n");
   }
   if(selection ==2){
@@ -31,6 +41,7 @@ treeAction(){
   }
   if(selection==3){
     printf("Listing employees:\n");
+    printTree(myTree);
   }
   if(selection==4){
     printf("Writing to file..\n");
