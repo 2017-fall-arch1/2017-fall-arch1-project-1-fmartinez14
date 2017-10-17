@@ -22,7 +22,7 @@ extern int llDoCheck;
  tree *treeAlloc();
 
 tree *treeAdder(tree *leTree,char *employeename);
-
-void printTree();
+tree *addElement(tree *leTree, tree_node *source, tree_node *toAddElement);
+void printTree(tree_node *leRoot);
 
 #endif

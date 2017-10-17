@@ -15,33 +15,47 @@ tree *treeAlloc(){
 
 tree *treeAdder(tree *leTree, char *employeename){
   tree_node *toAdd = (tree_node *) malloc(sizeof(tree_node));
-  toAdd->name = employeename;
+  char *temporal;
+  temporal = malloc(sizeof(char) * strlen(employeename));
+  strcpy(temporal,employeename);
+  toAdd->name = temporal;
   toAdd->children1=NULL;
   toAdd->children2=NULL;
-  if(leTree-> source == NULL){
-    leTree-> source = toAdd;
-  }
-  else{
-    leTree->source->children1 = toAdd;
-  }
-  printf("Added new employee: %s \n",toAdd->name);
+  leTree = addElement(leTree, leTree-> source, toAdd);
   return leTree;
 }
 
 
-void printTree(tree *leTree){
-  tree_node *temp = (tree_node *) malloc(sizeof(tree_node));
-  temp = leTree ->source;
-  while(temp != NULL){
-    printf("%s \n", temp->name);
-    if(temp->children1 != NULL){
-      temp = temp->children1;
+tree *addElement(tree *leTree, tree_node *source, tree_node *toAddElement){
+  if(source == NULL){
+    leTree -> source = toAddElement;
+    source =  toAddElement;
+    printf("Added to source \n");
+  }
+  else{
+    if(source -> children1 == NULL){
+      source -> children1 = toAddElement;
+      printf("Added to children 1 \n");
+      
     }
-    else if(temp-> children2 != NULL){
-      temp = temp->children2;
+   else if(source -> children2 == NULL){
+     source -> children2=  toAddElement;
+     printf("Added to children 2 \n");
     }
-    else{
-      break;
-    }
+   else{
+     leTree = addElement(leTree,source->children1,toAddElement);
+   }
+  }
+  return leTree;
+}
+
+
+void printTree(tree_node *leRoot){
+  if(leRoot == NULL)
+    return;
+  if(leRoot != NULL){
+    printTree(leRoot->children1);
+    printf("Employee name: %s \n",leRoot->name);
+    printTree(leRoot->children2);
   }
 }

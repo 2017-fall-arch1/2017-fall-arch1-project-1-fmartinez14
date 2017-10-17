@@ -43,7 +43,7 @@ void treeAction(){
   }
   if(selection==3){
     printf("Listing employees:\n");
-    printTree(myTree);
+    printTree(myTree->source);
   }
   if(selection==4){
     printf("Writing to file..\n");
