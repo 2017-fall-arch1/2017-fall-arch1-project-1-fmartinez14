@@ -7,6 +7,8 @@
 
 
 tree *myTree;
+tree_node *myRoot;
+
 
 main(){
   treeAction();
@@ -15,12 +17,12 @@ main(){
 
 
 void treeAction(){
+  myTree = treeAlloc();
   int selection=0;
   char fname[256];
   char employeename;
   int loopCheck = 1;
-  myTree = treeAlloc();
-  myTree-> name = ("%s","CheeseBalls");
+  //myTree-> source.name = ("%s","CheeseBalls");
   while(loopCheck == 1){
   printf("Hello! Please select an option below.\n");
   printf("1- Add a new employee.\n");

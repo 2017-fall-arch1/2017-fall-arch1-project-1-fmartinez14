@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#include "tree.h"
+
+tree *treeAlloc(){
+  tree *leTree = (tree *) malloc(sizeof(tree));
+  leTree-> name = NULL;
+  return leTree;
+}
+
+tree *treeAdder(tree *leTree, char *employeename){
+  leTree->name = employeename;
+  printf("%s",leTree->name);
+  return leTree;
+
+}
