@@ -12,7 +12,7 @@ tree *treeAlloc(){
   return leTree;
 }
 
-tree *treeAdder(tree *leTree, char *employeename){
+tree *treeAdder(tree *leTree, char *employeename){ //Creates a tree node object and passes to insert it to the tree.
   tree_node *toAdd = (tree_node *) malloc(sizeof(tree_node));
   char *temporal;
   temporal = malloc(sizeof(char) * strlen(employeename));
@@ -25,7 +25,7 @@ tree *treeAdder(tree *leTree, char *employeename){
 }
 
 
-tree *addElement(tree *leTree, tree_node *source, tree_node *toAddElement){
+tree *addElement(tree *leTree, tree_node *source, tree_node *toAddElement){ //Inserts tree node object into tree.
   if(source == NULL){
     leTree -> source = toAddElement;
     source =  toAddElement;
@@ -57,7 +57,7 @@ tree *addElement(tree *leTree, tree_node *source, tree_node *toAddElement){
   return leTree;
 }
 
-tree *deleteElement(tree *leTree,tree_node *leRoot){
+tree *deleteElement(tree *leTree,tree_node *leRoot){ //Deletes a element from the tree.
   if(leRoot == NULL)
     return leTree;
   if (leRoot -> children1 == NULL && leRoot-> children2 == NULL && leRoot == leTree->source){
@@ -90,7 +90,7 @@ tree *deleteElement(tree *leTree,tree_node *leRoot){
 }
 
 
-tree *deleteARoot(tree *leTree, tree_node *currentNode, tree_node *deleteMe){
+tree *deleteARoot(tree *leTree, tree_node *currentNode, tree_node *deleteMe){ //Looks for parent node of a children so one can delete it.
   if(currentNode == NULL)
     return leTree;
   else if(currentNode-> children1 == deleteMe){
@@ -112,7 +112,7 @@ tree *deleteARoot(tree *leTree, tree_node *currentNode, tree_node *deleteMe){
     }
 }
 
-tree_node *findElement(tree_node *leRoot, char *findMe){
+tree_node *findElement(tree_node *leRoot, char *findMe){ //Finds a tree node element in the tree.
   if(leRoot == NULL){
     printf("No such name in tree!\n");
   }
@@ -130,7 +130,7 @@ tree_node *findElement(tree_node *leRoot, char *findMe){
 }
 
 
-void printTree(tree_node *leRoot){
+void printTree(tree_node *leRoot){ //Prints the tree in Lower children - Parent - Right children order.
   if(leRoot == NULL)
     return;
   if(leRoot != NULL && leRoot-> name != NULL ){
@@ -142,14 +142,35 @@ void printTree(tree_node *leRoot){
 
 
 
-void writeTree(tree_node *leRoot, FILE *leFile){
+void writeTree(tree_node *leRoot, FILE *leFile){ //Writes tree to a text file.
   if(leRoot == NULL)
     return;
   if(leRoot != NULL && leRoot-> name != NULL){
     char *writeMe = malloc(strlen(leRoot->name) +1);
     writeMe= strcat(leRoot->name,";");
-    writeTree(leRoot->children1,leFile);
     fwrite(writeMe,1,strlen(writeMe),leFile);
+    writeTree(leRoot->children1,leFile);
     writeTree(leRoot->children2,leFile);
   }
+}
+
+tree *readTree(tree *leTree, FILE *leFile){ //Reads and inserts tree from a tex file.
+  char tempString[512];
+  char myChar;
+  int i=0;
+  while((myChar = getc(leFile)) != EOF){
+    if(myChar == ';'|| myChar == " "){
+      printf("Inserting : %s \n ", tempString);
+      leTree= treeAdder(leTree,tempString);
+      strcpy(tempString,"");
+      i=0;
+      fflush(stdout);
+    }
+    else{
+      tempString[i]= myChar;
+      tempString[i+2]="\0";
+      i++;
+    }
+  }
+  return leTree;
 }

@@ -28,4 +28,5 @@ tree *deleteElement(tree *leTree,tree_node *leRoot);
 tree_node *findElement(tree_node *leTree, char *deleteMe);
 tree *deleteARoot(tree *leTree,tree_node *currentNode,tree_node *deleteMe);
 void writeTree(tree_node *leRoot,FILE *leFile);
+tree *readTree(tree *leTree, FILE *leFile);
 #endif
