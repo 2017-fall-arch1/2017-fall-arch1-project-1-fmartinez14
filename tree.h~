@@ -1,0 +1,22 @@
+#ifndef tree_included
+#define tree_included
+
+
+
+typedef struct tree{
+  char *employee;
+  char *name;
+} tree;
+
+extern int llDoCheck;
+
+
+
+
+ tree *treeAlloc();
+
+tree *treeAdder(tree *leTree,char employeename);
+
+void printTree();
+
+#endif
