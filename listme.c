@@ -39,11 +39,23 @@ void treeAction(){
     printf("Employee added!\n");
   }
   if(selection ==2){
-    printf("Employee deleted!\n");
+    scanf("%s",&employeename);
+    tree_node *deleteMe;
+    deleteMe= findElement(myTree->source,&employeename);
+    if(deleteMe == NULL)
+      printf("No such employee with this name!");
+    else{
+      myTree= deleteElement(myTree, deleteMe);
+      printf("Employee deleted!\n");
+    }
   }
   if(selection==3){
+    if(myTree == NULL)
+      printf("No employees \n");
+    else{
     printf("Listing employees:\n");
     printTree(myTree->source);
+    }
   }
   if(selection==4){
     printf("Writing to file..\n");

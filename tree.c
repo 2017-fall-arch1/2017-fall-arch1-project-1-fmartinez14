@@ -1,3 +1,4 @@
+
  
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,6 +38,7 @@ tree *addElement(tree *leTree, tree_node *source, tree_node *toAddElement){
       printf("val: ",strcmp(source->name,toAddElement->name));
       if(source -> children1 == NULL){
 	source -> children1 = toAddElement;
+	source -> children1-> parent = source;
 	printf("Added to children 1 \n");
       }
       else{
@@ -46,6 +48,7 @@ tree *addElement(tree *leTree, tree_node *source, tree_node *toAddElement){
     else{
       if(source -> children2 == NULL){
        source -> children2=  toAddElement;
+       source ->children2 -> parent = source;
        printf("Added to children 2 \n");
       }
       else{
@@ -56,13 +59,88 @@ tree *addElement(tree *leTree, tree_node *source, tree_node *toAddElement){
   return leTree;
 }
 
+tree *deleteElement(tree *leTree,tree_node *leRoot){
+  if(leRoot == NULL)
+    return leTree;
+  if (leRoot -> children1 == NULL && leRoot-> children2 == NULL && leRoot == leTree->source){
+    leTree-> source = NULL;
+    return leTree;
+  }
+  else if(leRoot-> children1 == NULL && leRoot -> children2 == NULL){
+    leTree = deleteARoot(leTree,leTree->source,leRoot);
+    return leTree;
+  }
+  else if(leRoot-> children1 == NULL && leRoot -> children2 != NULL){
+    if(leRoot == leTree-> source)
+      leTree-> source = leRoot->children2;
+    leRoot = (leRoot -> children2);
+    leTree = deleteElement(leTree,leRoot->children1);
+    return leTree;
+  }
+  else if(leRoot -> children2 == NULL && leRoot -> children1 != NULL){
+    if(leRoot == leTree-> source)
+      leTree->source = leRoot->children1;
+    leRoot = leRoot -> children1;
+    leTree = deleteElement(leTree,leRoot->children1);
+    return leTree;
+  }
+  else{
+    leRoot = leRoot -> children2;
+    leTree= deleteElement(leTree,leRoot->children2);
+    return leTree;
+  }
+}
+
+
+tree *deleteARoot(tree *leTree, tree_node *currentNode, tree_node *deleteMe){
+  if(currentNode == NULL)
+    return leTree;
+  else if(currentNode-> children1 == deleteMe){
+    currentNode-> children1 = NULL;
+    return leTree;
+}
+  else if(currentNode-> children2 == deleteMe){
+    currentNode->children2= NULL;
+    return leTree;
+  }
+  else{
+    int difference = strcmp(currentNode->name,deleteMe);
+      if(difference ==1 && currentNode -> children1 != NULL)
+	deleteARoot(leTree,currentNode->children1,deleteMe);
+      else if(difference == -1 && currentNode -> children2 != NULL)
+	deleteARoot(leTree,currentNode->children2,deleteMe);
+      else
+	return leTree;
+    }
+}
+
+tree_node *findElement(tree_node *leRoot, char *findMe){
+  if(leRoot == NULL){
+    printf("No such name in tree!\n");
+  }
+  int difference = strcmp(leRoot->name, findMe);
+  if(difference ==0)
+    return leRoot;
+  else if(difference == 1 && leRoot -> children1 != NULL){
+    findElement(leRoot->children1, findMe);
+  }
+  else if(difference == -1 && leRoot-> children2 != NULL){
+    findElement(leRoot->children2, findMe);
+  }
+  else
+    return NULL;
+}
+
 
 void printTree(tree_node *leRoot){
   if(leRoot == NULL)
     return;
-  if(leRoot != NULL){
+  if(leRoot != NULL && leRoot-> name != NULL ){
     printTree(leRoot->children1);
     printf("Employee name: %s \n",leRoot->name);
     printTree(leRoot->children2);
   }
 }
+
+
+
