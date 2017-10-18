@@ -26,7 +26,7 @@ void treeAction(){ //Menu selection screen.
   char fnameRead[128];
   int loopCheck = 1;
   while(loopCheck == 1){ //Keep program running until user stops it.
-  printf("Hello! Please select an option below.\n");
+  printf("Hello!! Please select an option below.\n");
   printf("1- Add a new employee.\n");
   printf("2- Delete an employee\n");
   printf("3- List all employees \n");
