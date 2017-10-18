@@ -21,3 +21,18 @@ clean:
 demo: llDemo
 	(echo first; echo "second line"; echo "third and last") | ./llDemo
 
+
+ilistme: listme.o tree.o
+	cc -o $@ $^
+
+tree.o: tree.c tree.h
+	cc -c $(CFLAGS) tree.c
+
+listme.o: listme.c  tree.h
+	cc -c $(CFLAGS) listme.c
+
+cleanTree:
+	rm -f *.o ilistme
+
+myTree: ilistme
+	./ilistme
