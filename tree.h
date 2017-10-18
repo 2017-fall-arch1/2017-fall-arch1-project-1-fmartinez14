@@ -1,6 +1,6 @@
 #ifndef tree_included
 #define tree_included
-
+#include <stdio.h>
 
 
 typedef struct tree_node{
@@ -27,5 +27,5 @@ void printTree(tree_node *leRoot);
 tree *deleteElement(tree *leTree,tree_node *leRoot);
 tree_node *findElement(tree_node *leTree, char *deleteMe);
 tree *deleteARoot(tree *leTree,tree_node *currentNode,tree_node *deleteMe);
-void saveToFile(tree *leTree);
+void writeTree(tree_node *leRoot,FILE *leFile);
 #endif

@@ -1,5 +1,3 @@
-
- 
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -144,3 +142,14 @@ void printTree(tree_node *leRoot){
 
 
 
+void writeTree(tree_node *leRoot, FILE *leFile){
+  if(leRoot == NULL)
+    return;
+  if(leRoot != NULL && leRoot-> name != NULL){
+    char *writeMe = malloc(strlen(leRoot->name) +1);
+    writeMe= strcat(leRoot->name,";");
+    writeTree(leRoot->children1,leFile);
+    fwrite(writeMe,1,strlen(writeMe),leFile);
+    writeTree(leRoot->children2,leFile);
+  }
+}

@@ -19,8 +19,9 @@ main(){
 void treeAction(){
   myTree = treeAlloc();
   int selection=0;
-  char fname[256];
+  char fname[128];
   char employeename;
+  FILE *leFile;
   int loopCheck = 1;
   //myTree-> source.name = ("%s","CheeseBalls");
   while(loopCheck == 1){
@@ -58,7 +59,11 @@ void treeAction(){
     }
   }
   if(selection==4){
+    printf("Write the filename, please!:              ");
+    scanf("%s",fname);
+    leFile= fopen(fname,"w");
     printf("Writing to file..\n");
+    writeTree(myTree->source,leFile);
   }
   if(selection==5){
     printf("Reading from file.. \n");
